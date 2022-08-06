@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-springboot-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-springboot-api
+  template:
+    metadata:
+      labels:
+         app: sample-springboot-api
+    spec:
+      containers:
+        - name: sample-springboot-api
+          image: public.ecr.aws/mock-node-api/lowsandbox:sample-springboot-api
+          env:
+            - name: ENV
+              value: "Unclassified"
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: POD_SERVICE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.serviceAccountName
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+

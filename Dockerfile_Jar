@@ -1,0 +1,9 @@
+##
+# The Dockerfile that builds the container by extracting layers from the jar
+# is buggy because it presents issues with mapping dependent classes for the app to function properly
+# The simpler approach is to simple copy over the Jar like we are doing here
+##
+FROM eclipse-temurin:18-jre-alpine
+ADD target/*.jar application.jar
+ENTRYPOINT [ "java","-jar","application.jar" ]
+EXPOSE 8080
