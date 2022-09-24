@@ -1,0 +1,5 @@
+releases:
+- name: sample-springboot-local-k8
+  chart: ./helm_local
+ # values:
+  installed: false
